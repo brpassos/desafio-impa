@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -90,7 +91,8 @@ public class TaskController {
             }
 
             Task currentTask = taskOptional.get();
-            BeanUtils.copyProperties(task, currentTask, "id");
+            if (task.getTitle() != null) currentTask.setTitle(task.getTitle());
+            if (task.getDescription() != null) currentTask.setDescription(task.getDescription());
 
             return ResponseEntity.status(HttpStatus.OK).body(taskService.save(currentTask));
 

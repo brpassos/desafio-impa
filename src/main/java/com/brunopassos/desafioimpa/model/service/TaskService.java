@@ -19,6 +19,8 @@ public class TaskService {
 
     @Transactional
     public Task save(Task task) {
+        if(task.getCreatedAt() == null) task.setCreatedAt(LocalDateTime.now());
+        task.setUpdatedAt(LocalDateTime.now());
         return taskRepository.save(task);
     }
 

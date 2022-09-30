@@ -1,6 +1,7 @@
 package com.brunopassos.desafioimpa.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class Task {
     private Integer id;
     private String title;
     private String description;
+    @Column(columnDefinition = "boolean default false")
     private Boolean done;
     private LocalDateTime doneAt;
     private LocalDateTime createdAt;
@@ -23,8 +25,8 @@ public class Task {
     private User user;
 
     public Task() {
-        createdAt = LocalDateTime.now();
-        done = false;
+        //createdAt = LocalDateTime.now();
+        //updatedAt= LocalDateTime.now();
     }
 
     public User getUser() {
