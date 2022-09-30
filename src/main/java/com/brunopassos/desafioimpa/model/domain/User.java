@@ -1,5 +1,7 @@
 package com.brunopassos.desafioimpa.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,7 +15,8 @@ public class User {
     @Column(unique = true)
     private String email;
     @OneToMany
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
+    @JsonIgnoreProperties(value = {"user"})
     private List<Task> tasks;
 
     public Integer getId() {

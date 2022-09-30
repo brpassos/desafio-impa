@@ -1,5 +1,7 @@
 package com.brunopassos.desafioimpa.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,12 +14,18 @@ public class Task {
     private String title;
     private String description;
     private Boolean done;
-    private LocalDateTime done_at;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime doneAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
+    @JsonIgnoreProperties(value = {"tasks"})
     private User user;
+
+    public Task() {
+        createdAt = LocalDateTime.now();
+        done = false;
+    }
 
     public User getUser() {
         return user;
@@ -59,27 +67,28 @@ public class Task {
         this.done = done;
     }
 
-    public LocalDateTime getDone_at() {
-        return done_at;
+    public LocalDateTime getDoneAt() {
+        return doneAt;
     }
 
-    public void setDone_at(LocalDateTime done_at) {
-        this.done_at = done_at;
+    public void setDoneAt(LocalDateTime done_at) {
+        this.doneAt = done_at;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime created_at) {
+        this.createdAt = created_at;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updated_at) {
+        this.updatedAt = updated_at;
     }
+
 }
