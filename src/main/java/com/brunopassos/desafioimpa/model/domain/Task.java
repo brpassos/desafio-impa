@@ -1,6 +1,7 @@
 package com.brunopassos.desafioimpa.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,23 +12,24 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Integer id;
     private String title;
     private String description;
     @Column(columnDefinition = "boolean default false")
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Boolean done;
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime doneAt;
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime createdAt;
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime updatedAt;
     @ManyToOne
     @JoinColumn(name = "userId")
     @JsonIgnoreProperties(value = {"tasks"})
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private User user;
-
-    public Task() {
-        //createdAt = LocalDateTime.now();
-        //updatedAt= LocalDateTime.now();
-    }
 
     public User getUser() {
         return user;

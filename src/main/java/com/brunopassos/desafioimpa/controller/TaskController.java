@@ -4,6 +4,12 @@ import com.brunopassos.desafioimpa.model.domain.Task;
 import com.brunopassos.desafioimpa.model.domain.User;
 import com.brunopassos.desafioimpa.model.service.TaskService;
 import com.brunopassos.desafioimpa.model.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +28,17 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Cadastrar uma tarefa para um usuário")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefa cadastrada",
+                content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))
+                }
+            ),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado!",
+                    content = @Content
+            )
+    })
     @PostMapping("/user/{user_id}")
     public ResponseEntity<Object> insert(@PathVariable(value = "user_id") Integer userId, @RequestBody Task task) {
         try {
@@ -29,7 +46,7 @@ public class TaskController {
             Optional<User> userOptional = userService.findById(userId);
 
             if(userOptional.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não existe!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado!");
             }
 
             task.setUser(userOptional.get());
@@ -42,6 +59,16 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Listar todas as tarefas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefas",
+                    content = {
+                            @Content(
+                                mediaType = "application/json",
+                                array = @ArraySchema(schema = @Schema(implementation = Task.class)))
+                    }
+            )
+    })
     @GetMapping
     public ResponseEntity<Object> getAll() {
         try{
@@ -52,6 +79,16 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Listar as tarefas de um usuário")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefas",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = Task.class)))
+                    }
+            )
+    })
     @GetMapping("/user/{user_id}")
     public ResponseEntity<Object> getAllByUser(@PathVariable(value = "user_id") Integer userId) {
         try{
@@ -62,6 +99,14 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Detalhar uma tarefa")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefa",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))
+                    }
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOne(@PathVariable(value = "id") Integer id) {
         try {
@@ -69,7 +114,7 @@ public class TaskController {
             Optional<Task> taskOptional = taskService.findById(id);
 
             if(taskOptional.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não existe!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada!");
             }
 
             return ResponseEntity.status(HttpStatus.OK).body(taskOptional.get());
@@ -80,6 +125,17 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Alterar uma tarefa")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefa alterada",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))
+                    }
+            ),
+            @ApiResponse(responseCode = "404", description = "Tarefa não encontrada!",
+                    content = @Content
+            )
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Integer id, @RequestBody Task task) {
         try {
@@ -87,7 +143,7 @@ public class TaskController {
             Optional<Task> taskOptional = taskService.findById(id);
 
             if(taskOptional.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não existe!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada!");
             }
 
             Task currentTask = taskOptional.get();
@@ -102,6 +158,15 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Deletar uma tarefa")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefa deletada!",
+                    content = @Content
+            ),
+            @ApiResponse(responseCode = "404", description = "Tarefa não encontrada!",
+                    content = @Content
+            )
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id) {
         try {
@@ -109,7 +174,7 @@ public class TaskController {
             Optional<Task> taskOptional = taskService.findById(id);
 
             if(taskOptional.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não existe!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada!");
             }
 
             taskService.delete(taskOptional.get());
@@ -122,6 +187,17 @@ public class TaskController {
         }
     }
 
+    @Operation(summary = "Concluir uma tarefa")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tarefa concluída!",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))
+                    }
+            ),
+            @ApiResponse(responseCode = "404", description = "Tarefa não encontrada!",
+                    content = @Content
+            )
+    })
     @GetMapping("/done/{id}")
     public ResponseEntity<Object> done(@PathVariable(value = "id") Integer id) {
         try {
@@ -129,7 +205,7 @@ public class TaskController {
             Optional<Task> taskOptional = taskService.findById(id);
 
             if(taskOptional.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não existe!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada!");
             }
 
             return ResponseEntity.status(HttpStatus.OK).body(taskService.done(taskOptional.get()));
