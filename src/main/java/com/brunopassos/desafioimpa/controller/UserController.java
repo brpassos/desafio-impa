@@ -23,7 +23,7 @@ public class UserController {
 
     @Operation(summary = "Cadastre um usuário")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário cadastrado",
+            @ApiResponse(responseCode = "201", description = "Usuário cadastrado",
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))
                     }

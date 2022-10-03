@@ -30,7 +30,7 @@ public class TaskController {
 
     @Operation(summary = "Cadastrar uma tarefa para um usuário")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tarefa cadastrada",
+            @ApiResponse(responseCode = "201", description = "Tarefa cadastrada",
                 content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))
                 }
