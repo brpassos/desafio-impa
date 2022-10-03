@@ -26,7 +26,7 @@ services:
 
 ### Documentação
 
-Para documentar a API foi utilizado o [OpenAPI](https://www.openapis.org/) (Swagger 3) com a depência abaixo:
+Para documentar a API foi utilizado o [OpenAPI](https://www.openapis.org/) (Swagger 3) com a dependência abaixo:
 
 ~~~
 <dependency>
@@ -36,15 +36,13 @@ Para documentar a API foi utilizado o [OpenAPI](https://www.openapis.org/) (Swag
 </dependency>
 ~~~
 
-
-
 ### Ambiente de Testes (Heroku)
 
 Com o objeto de facilitar a demonstração e testes do projeto e acesso rápido a documentação da API, ele foi implantado no Heroku e pode ser testado através da interface do swagger:
 
 https://desafio-impa.herokuapp.com/swagger-ui.html
 
-Para testes e acesso a documetnação da API em ambiente local pode utilizar a url http://localhost:8080/swagger-ui.html
+Para testes e acesso a documentação da API em ambiente local pode utilizar a url http://localhost:8080/swagger-ui.html
 
 **Usuário pré cadastrado para testes** user_id: 4
 
