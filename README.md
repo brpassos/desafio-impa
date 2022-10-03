@@ -1,6 +1,6 @@
 # Gerenciamento de Tarefas - API Restful
 
-Esta API foi desenvolvida para realizar a tarefa de desenvolver uma API Restful para resolver a história abaixo:
+Este projeto foi desenvolvido para realizar a tarefa de desenvolver uma API Restful para resolver a história abaixo:
 
 **"Como um usuário, eu quero ter a possibilidade de listar, cadastrar, exibir, atualizar, deletar e concluir minhas tarefas."**
 
